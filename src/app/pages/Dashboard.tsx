@@ -70,7 +70,8 @@ export default function Dashboard(): JSX.Element {
       duration.minutes === 0 &&
       duration.seconds === 0
     ) {
-      const durationByForm = new Date(endDate).getTime() - new Date(startDate).getTime();
+      const durationByForm =
+        new Date(endDate).getTime() - new Date(startDate).getTime();
       console.log(durationByForm);
     }
     const response = await fetch('/api/tracked-time', {

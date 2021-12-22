@@ -24,6 +24,7 @@ export default function Form({ onSubmit }: FormProps): JSX.Element {
       <label>
         Description:
         <textarea
+          required
           value={description}
           onChange={(event) => setDescription(event.target.value)}
         />
@@ -31,6 +32,7 @@ export default function Form({ onSubmit }: FormProps): JSX.Element {
       <label>
         Date:
         <input
+          required
           type="date"
           value={date.toDateString()}
           onChange={(event) => setDate(new Date(event.target.value))}

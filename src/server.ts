@@ -20,10 +20,17 @@ app.post('/api/tracked-time', async (req, res) => {
 });
 
 app.get('/api/bookings', async (_req, res) => {
-  const bookings = await getCollection().find().toArray();
+  const bookings = await getCollection()
+    .find()
+    .sort({ startDate: -1 })
+    .limit(20)
+    .toArray();
   console.log(bookings);
-
-  res.status(200).send(bookings);
+  if (bookings) {
+    res.status(200).send(bookings);
+  } else {
+    res.send([]);
+  }
 });
 
 app.use('/storybook', express.static('dist/storybook'));

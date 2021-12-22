@@ -1,4 +1,5 @@
 import Button from '../Button/Button';
+import styled from 'styled-components';
 
 type TimerProps = {
   duration: {
@@ -17,7 +18,7 @@ export default function Timer({
   endTimer,
 }: TimerProps): JSX.Element {
   return (
-    <div>
+    <TimerContainer>
       <h2>Timer</h2>
       <dl>
         <dt>Hours</dt>
@@ -27,9 +28,17 @@ export default function Timer({
         <dt>Seconds</dt>
         <dd>{duration.seconds}</dd>
       </dl>
-      <Button onClick={startTimer}>Start timer</Button>
-      <Button onClick={pauseTimer}>Pause timer</Button>
-      <Button onClick={endTimer}>End timer</Button>
-    </div>
+      <div>
+        <Button onClick={startTimer}>Start timer</Button>
+        <Button onClick={pauseTimer}>Pause timer</Button>
+        <Button onClick={endTimer}>End timer</Button>
+      </div>
+    </TimerContainer>
   );
 }
+
+const TimerContainer = styled.div`
+  display: grid;
+  justify-content: center;
+  gap: 1rem;
+`;

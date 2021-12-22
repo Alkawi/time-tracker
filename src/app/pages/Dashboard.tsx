@@ -54,10 +54,12 @@ export default function Dashboard(): JSX.Element {
   async function handleSubmit(
     description: string,
     startDate: string,
-    endDate: string
+    endDate: string,
+    duration: string
   ) {
-    const duration = { hours, minutes, seconds };
-
+    const durationByTimer = { hours, minutes, seconds };
+    const durationByForm = duration;
+    let submittableDuration;
     endTimer();
     if (startOfDuration !== '') {
       startDate = startOfDuration;
@@ -66,20 +68,25 @@ export default function Dashboard(): JSX.Element {
       endDate = endOfDuration;
     }
     if (
-      duration.hours === 0 &&
-      duration.minutes === 0 &&
-      duration.seconds === 0
+      durationByTimer.hours === 0 &&
+      durationByTimer.minutes === 0 &&
+      durationByTimer.seconds === 0
     ) {
-      const durationByForm =
-        new Date(endDate).getTime() - new Date(startDate).getTime();
-      console.log(durationByForm);
+      submittableDuration = durationByForm;
+    } else {
+      submittableDuration = durationByTimer;
     }
     const response = await fetch('/api/tracked-time', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({ description, startDate, endDate, duration }),
+      body: JSON.stringify({
+        description,
+        startDate,
+        endDate,
+        submittableDuration,
+      }),
     });
     if (response.ok) {
       console.log('it works');

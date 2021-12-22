@@ -1,20 +1,26 @@
 import { useState } from 'react';
+import styled from 'styled-components';
 
 type FormProps = {
-  onSubmit: (description: string, startDate: string, endDate: string) => void;
+  onSubmit: (
+    description: string,
+    startDate: string,
+    endDate: string,
+    duration: string
+  ) => void;
 };
 
 export default function Form({ onSubmit }: FormProps): JSX.Element {
   const [description, setDescription] = useState<string>('');
   const [startDate, setStartDate] = useState<string>('');
   const [endDate, setEndDate] = useState<string>('');
-
+  const [duration, setDuration] = useState<string>('');
   function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    onSubmit(description, startDate, endDate);
+    onSubmit(description, startDate, endDate, duration);
   }
   return (
-    <form onSubmit={(event) => handleSubmit(event)}>
+    <InputForm onSubmit={(event) => handleSubmit(event)}>
       <label>
         Description:
         <textarea
@@ -40,7 +46,21 @@ export default function Form({ onSubmit }: FormProps): JSX.Element {
           onChange={(event) => setEndDate(event.target.value)}
         />
       </label>
+      <label>
+        Duration:
+        <input
+          type="time"
+          value={duration}
+          onChange={(event) => setDuration(event.target.value)}
+        />
+      </label>
       <button type="submit">Submit</button>
-    </form>
+    </InputForm>
   );
 }
+
+const InputForm = styled.form`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+`;

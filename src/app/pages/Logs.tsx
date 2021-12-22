@@ -4,16 +4,16 @@ import useFetch from '../hooks/useFetch';
 import type { Booking } from '../types';
 
 export default function Logs(): JSX.Element {
-  const [bookings] = useFetch<Booking[]>('/api/bookings');
+  const bookings = useFetch<Booking[]>('/api/bookings');
   console.log(bookings);
 
   return (
     <div>
       {bookings &&
         bookings.map((booking) => {
-          <Card booking={booking} />;
+          <Card key={booking.description} booking={booking} />;
         })}
-      {bookings && bookings.length === 0 && <article>No logs found</article>}
+      {(!bookings || bookings.length === 0) && <article>No logs found</article>}
       <Link to="/">
         <button>Back to timer</button>
       </Link>

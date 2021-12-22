@@ -1,23 +1,17 @@
 import { useState } from 'react';
 
 type FormProps = {
-  onSubmit: (
-    description: string,
-    date: Date,
-    startTime: string,
-    endTime: string
-  ) => void;
+  onSubmit: (description: string, startDate: string, endDate: string) => void;
 };
 
 export default function Form({ onSubmit }: FormProps): JSX.Element {
   const [description, setDescription] = useState<string>('');
-  const [date, setDate] = useState<Date>(new Date());
-  const [startTime, setStartTime] = useState<string>('');
-  const [endTime, setEndTime] = useState<string>('');
+  const [startDate, setStartDate] = useState<string>('');
+  const [endDate, setEndDate] = useState<string>('');
 
   function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    onSubmit(description, date, startTime, endTime);
+    onSubmit(description, startDate, endDate);
   }
   return (
     <form onSubmit={(event) => handleSubmit(event)}>
@@ -30,34 +24,23 @@ export default function Form({ onSubmit }: FormProps): JSX.Element {
         />
       </label>
       <label>
-        Date:
+        Start date:
         <input
-          required
-          type="date"
-          value={date.toDateString()}
-          onChange={(event) => setDate(new Date(event.target.value))}
+          type="datetime-local"
+          value={startDate}
+          onChange={(event) => setStartDate(event.target.value)}
         />
       </label>
+
       <label>
-        Start time:
+        End date:
         <input
-          type="time"
-          value={startTime}
-          onChange={(event) =>
-            setStartTime(new Date(event.target.value).toLocaleTimeString())
-          }
+          type="datetime-local"
+          value={endDate}
+          onChange={(event) => setEndDate(event.target.value)}
         />
       </label>
-      <label>
-        End time:
-        <input
-          type="time"
-          value={endTime}
-          onChange={(event) =>
-            setEndTime(new Date(event.target.value).toLocaleTimeString())
-          }
-        />
-      </label>
+      <button type="submit">Submit</button>
     </form>
   );
 }
